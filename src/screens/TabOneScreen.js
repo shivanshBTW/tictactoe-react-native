@@ -1,5 +1,7 @@
+import { useCallback, useState } from "react";
 import { Button, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
+import useForceUpdate from "use-force-update";
 
 const styles = StyleSheet.create({
   container: {
@@ -49,13 +51,39 @@ const styles = StyleSheet.create({
   },
   cellButtonText: {
     marginVertical: 10,
-    marginHorizontal: 30,
+    // marginHorizontal: 30,
     fontSize: 60,
+    width: 80,
+    textAlign: "center",
   },
 });
 
+const n = 3; // for an n by n board
+const emptyArrayJSON = JSON.stringify(Array.from(new Array(n)));
+const fullArray = Array.from(new Array(n)).map((_, index) =>
+  JSON.parse(emptyArrayJSON)
+);
+
 function TabOneScreen({ navigation }) {
-  let n = 3; // for an n by n board
+  const forceUpdate = useForceUpdate();
+
+  let [playStates, setPlayStates] = useState(fullArray);
+
+  const handleCellClick = (rowIndex, columnIndex) => (event) => {
+    console.log({ ...event });
+    console.log({ ...event.target });
+    console.log(rowIndex, columnIndex, playStates[rowIndex][columnIndex]);
+
+    let tempPlayStates = playStates;
+    tempPlayStates[rowIndex][columnIndex] = !playStates[rowIndex][columnIndex];
+
+    console.log(rowIndex, columnIndex, tempPlayStates[rowIndex][columnIndex]);
+
+    setPlayStates(tempPlayStates);
+    forceUpdate();
+  };
+
+  console.log(playStates);
 
   return (
     <View style={styles.container}>
@@ -66,15 +94,19 @@ function TabOneScreen({ navigation }) {
         darkColor="rgba(255,255,255,0.1)"
       />
       <View style={styles.gameContainer}>
-        {Array.from(new Array(n)).map((_, index) => {
+        {playStates.map((cellRows, index) => {
           return (
             <View style={styles.rowContainer} key={index}>
-              {Array.from(new Array(n)).map((__, index2) => {
+              {cellRows.map((cell, index2) => {
+                console.log(cell);
                 return (
                   <View style={styles.cellButtonContainer} key={index2}>
-                    <View style={styles.cellButton}>
-                      <Text style={styles.cellButtonText}>X</Text>
-                    </View>
+                    <Pressable
+                      style={styles.cellButton}
+                      onPress={handleCellClick(index, index2)}
+                    >
+                      <Text style={styles.cellButtonText}>{!!cell ? "X" : "O"}</Text>
+                    </Pressable>
                   </View>
                 );
               })}

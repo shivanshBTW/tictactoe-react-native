@@ -3,24 +3,24 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FontAwesome } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
-} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
-import { Pressable } from 'react-native';
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as React from "react";
+import { Pressable } from "react-native";
 
-import Colors from '../../constants/Colors';
-import useColorScheme from '../../hooks/useColorScheme';
-import ModalScreen from '../../screens/ModalScreen';
-import NotFoundScreen from '../../screens/NotFoundScreen';
-import TabOneScreen from '../../screens/TabOneScreen';
-import TabTwoScreen from '../../screens/TabTwoScreen';
-import LinkingConfiguration from './LinkingConfiguration';
+import Colors from "../../constants/Colors";
+import useColorScheme from "../../hooks/useColorScheme";
+import ModalScreen from "../../screens/ModalScreen";
+import NotFoundScreen from "../../screens/NotFoundScreen";
+import TabOneScreen from "../../screens/TabOneScreen";
+import TabTwoScreen from "../../screens/TabTwoScreen";
+import LinkingConfiguration from "./LinkingConfiguration";
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -48,11 +48,11 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }) => ({
-          title: 'Tab One',
+          title: "Tab One",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
+              onPress={() => navigation.navigate("Modal")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
@@ -71,7 +71,7 @@ function BottomTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: 'Tab Two',
+          title: "Tab Two",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
@@ -97,9 +97,9 @@ function RootNavigator() {
       <Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: 'Oops!' }}
+        options={{ title: "Oops!" }}
       />
-      <Group screenOptions={{ presentation: 'modal' }}>
+      <Group screenOptions={{ presentation: "modal" }}>
         <Screen name="Modal" component={ModalScreen} />
       </Group>
     </Navigator>
@@ -110,7 +110,7 @@ function Navigation({ colorScheme }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       <RootNavigator />
     </NavigationContainer>
