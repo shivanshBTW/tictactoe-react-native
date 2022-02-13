@@ -50,13 +50,12 @@ const styles = StyleSheet.create({
   cellButtonText: {
     marginVertical: 10,
     marginHorizontal: 30,
-    fontSize:60
+    fontSize: 60,
   },
 });
 
 function TabOneScreen({ navigation }) {
-  let columnCount = 3;
-  let rowCount = 3;
+  let n = 3; // for an n by n board
 
   return (
     <View style={styles.container}>
@@ -67,10 +66,10 @@ function TabOneScreen({ navigation }) {
         darkColor="rgba(255,255,255,0.1)"
       />
       <View style={styles.gameContainer}>
-        {Array.from(new Array(rowCount)).map((_, index) => {
+        {Array.from(new Array(n)).map((_, index) => {
           return (
             <View style={styles.rowContainer} key={index}>
-              {Array.from(new Array(columnCount)).map((__, index2) => {
+              {Array.from(new Array(n)).map((__, index2) => {
                 return (
                   <View style={styles.cellButtonContainer} key={index2}>
                     <View style={styles.cellButton}>
